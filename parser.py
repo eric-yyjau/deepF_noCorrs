@@ -39,6 +39,9 @@ class KittiParamParser(object):
         # R1, R2 = self.calib['R_rect_0{}'.format(f_cam)], self.calib['R_rect_0{}'.format(t_cam)]
         t1, t2 = self.calib['T_0{}'.format(f_cam)], self.calib['T_0{}'.format(t_cam)]
 
+        print(f"K1: {K1}, K2: {K2}, R1: {R1}, R2: {R2}, t1: {t1}, t2: {t2}")
+
+
         R = np.dot(R2, np.linalg.inv(R1))
         t = t2 - t1
         
@@ -50,7 +53,7 @@ class KittiParamParser(object):
         #compute
         F = np.dot(np.linalg.inv(K2.T), np.dot(T, np.dot(R, np.linalg.inv(K1))))
         F /= F[2,2]
-        assert np.linalg.matrix_rank(F) == 2
+        # assert np.linalg.matrix_rank(F) == 2
         return F
 
     def undistort(self, img, cam_id):

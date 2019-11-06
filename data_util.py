@@ -19,7 +19,9 @@ from kittiFMat.kitti_fmat import get_FMat
 # CFD = os.path.dirname(os.path.realpath(__file__))
 
 # PATH_CAM = DATASET_PATH+'/train/kitti/2011_09_26/'
-PATH_CAM = '../data_kitti/kitti/2011_09_26/'
+# PATH_CAM = '../data_kitti/kitti/2011_09_26/'
+# PATH_CAM = './data/kitti/2011_09_26_drive_0001_sync/'
+PATH_CAM = './data/kitti/2011_09_26/'
 # PATH_CAM_LEFT = 'data/kitti/2011_09_26/2011_09_26_drive_0001_sync/image_00/data/'
 # PATH_CAM_RIGHT = 'data/kitti/2011_09_26/2011_09_26_drive_0001_sync/image_01/data/'
 
@@ -250,6 +252,7 @@ def make_mvs_data_loader(size=(128,128), norm="norm"):
 def make_kitti_data_loader(size=(128,128), norm="norm"):
     # print ('dataset:',DATASET_PATH)
     path_dir = os.listdir(PATH_CAM)
+    print(f"path_dir: {path_dir}")
     '''
     ct = 0
     for path in path_dir:
@@ -303,7 +306,9 @@ def make_kitti_data_loader(size=(128,128), norm="norm"):
     i = 0
     for path in path_dir:
         path_left = os.path.join(PATH_CAM, path , 'image_00/data/')
+        print(f"path_left: {path_left}")
         path_right = os.path.join(PATH_CAM, path , 'image_01/data/')
+        print(f"path_right: {path_right}")
 
         if not (os.path.isdir(path_left) and os.path.isdir(path_right)):
                 continue
@@ -321,6 +326,7 @@ def make_kitti_data_loader(size=(128,128), norm="norm"):
 
             print ('pre-processing image: ', left_path, 'i: ', i)
             F, pts1, pts2 = get_FMat(left_path, right_path)
+
 
             if F is None or pts1 is None or pts2 is None:
                 continue
@@ -509,13 +515,17 @@ if __name__ == "__main__":
 if __name__ == '__main__':
     norm = sys.argv[1]
     print ('norm: ', norm)
+    from pathlib import Path
+    base_path = f'../saved_npy/{norm}'
+    Path(base_path).mkdir(exist_ok=True, parents=True)
 
     data_loader = make_kitti_data_loader(norm=norm)
     tr_lst, val_lst, te_lst = data_loader()
 
-    # print ('train: ', tr_lst[0].shape, tr_lst[1].shape, tr_lst[2].shape, tr_lst[3].shape)
-    # print ('val: ', val_lst[0].shape, val_lst[1].shape, val_lst[2].shape, val_lst[3].shape)
-    # print ('test: ', te_lst[0].shape, te_lst[1].shape, te_lst[2].shape, te_lst[3].shape)
+    print ('train: ', tr_lst[0].shape, tr_lst[1].shape, tr_lst[2].shape, tr_lst[3].shape)
+    print ('val: ', val_lst[0].shape, val_lst[1].shape, val_lst[2].shape, val_lst[3].shape)
+    print ('test: ', te_lst[0].shape, te_lst[1].shape, te_lst[2].shape, te_lst[3].shape)
+    
     
     # np.save('../saved_npy/'+norm+'/tr_X.npy',tr_lst[0])
     np.save('../saved_npy/'+norm+'/tr_Y_NN.npy',tr_lst[1])

@@ -16,7 +16,9 @@ def get_FMat(img1, img2, r=1.0, cam1=0, cam2=1, mode='CAM'):
     img2 = cv2.resize(img2, (1392,512), interpolation=cv2.INTER_CUBIC)
     
     # p = KittiParamParser(os.path.join(DATASET_PATH,'train','kitti/calib_cam_to_cam.txt'))
-    p = KittiParamParser('../data_kitti/kitti/calib_cam_to_cam.txt')
+    # p = KittiParamParser('../data_kitti/kitti/calib_cam_to_cam.txt')
+    p = KittiParamParser('./data/kitti/2011_09_26/calib_cam_to_cam.txt')
+    
     img1 = p.undistort(img1, cam1)
     img2 = p.undistort(img2, cam2)
 

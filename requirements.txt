@@ -1,0 +1,5 @@
+progressbar
+vapory
+opencv-python==3.4.2.16
+opencv-contrib-python==3.4.2.16
+tensorflow-gpu==1.14

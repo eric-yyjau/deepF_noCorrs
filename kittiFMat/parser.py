@@ -63,10 +63,13 @@ class KittiParamParser(object):
         the following formula:
         F = K2^(-T)*R*[t]x*K1^(-1)"""
         #assemble the ingredients
+        print(f"self.calib: {self.calib}")
         K1, K2 = self.calib['K_0{}'.format(f_cam)], self.calib['K_0{}'.format(t_cam)]
         R1, R2 = self.calib['R_0{}'.format(f_cam)], self.calib['R_0{}'.format(t_cam)]
         # R1, R2 = self.calib['R_rect_0{}'.format(f_cam)], self.calib['R_rect_0{}'.format(t_cam)]
         t1, t2 = self.calib['T_0{}'.format(f_cam)], self.calib['T_0{}'.format(t_cam)]
+
+        print(f"K1: {K1}, K2: {K2}, R1: {R1}, R2: {R2}, t1: {t1}, t2: {t2}")
 
         R = np.dot(R2, np.linalg.inv(R1))
         t = t2 - t1

@@ -7,6 +7,7 @@ DATA_DIR="data/kitti"
 mkdir -p $DATA_DIR
 
 base_url="http://kitti.is.tue.mpg.de/kitti/raw_data/"
+base_url="https://s3.eu-central-1.amazonaws.com/avg-kitti/raw_data/"
 
 #For now just download one dataset
 date="2011_09_26"
@@ -14,6 +15,8 @@ ds_name="${date}_drive_0001"
 
 imgs_url="http://kitti.is.tue.mpg.de/kitti/raw_data/${ds_name}/${ds_name}_sync.zip"
 calib_url="http://kitti.is.tue.mpg.de/kitti/raw_data/${date}_calib.zip"
+imgs_url="${base_url}/${ds_name}/${ds_name}_sync.zip"
+calib_url="${base_url}/${date}_calib.zip"
 # trklet_url="http://kitti.is.tue.mpg.de/kitti/raw_data/${ds_name}/${ds_name}_tracklets.zip"
 
 wget $imgs_url -O "$DATA_DIR/${ds_name}.zip" 
